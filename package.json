@@ -1,0 +1,11 @@
+{
+  "name": "pi-security",
+  "version": "1.0.0",
+  "description": "Using Rasp Pi with a HC-SR04 and a Camera Module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Tobi Akerele",
+  "license": "ISC"
+}
