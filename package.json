@@ -9,6 +9,7 @@
   "author": "Tobi Akerele",
   "license": "ISC",
   "dependencies": {
-    "pigpio": "^0.6.4"
+    "pigpio": "^0.6.4",
+    "moment": "^2.20.1"
   }
 }
