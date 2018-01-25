@@ -1,3 +1,5 @@
+'use strict';
+
 var Gpio = require('pigpio').Gpio;
 var trigger = new Gpio(23, {
   mode: Gpio.OUTPUT
@@ -15,7 +17,7 @@ trigger.digitalWrite(0); // Make sure trigger is low
 (function () {
   var startTick;
 
-  console.log("started program");
+  console.log("Started program");
   echo.on('alert', function (level, tick) {
     var endTick, diff;
     console.log(level, tick);
