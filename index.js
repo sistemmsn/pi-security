@@ -15,9 +15,10 @@ trigger.digitalWrite(0); // Make sure trigger is low
 (function () {
   var startTick;
 
+  console.log("started program");
   echo.on('alert', function (level, tick) {
     var endTick, diff;
-
+    console.log(level, tick);
     if (level == 1) {
       startTick = tick;
     } else {
