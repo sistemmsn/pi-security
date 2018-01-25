@@ -1,7 +1,7 @@
 'use strict';
 
 var Gpio = require('onoff').Gpio,
-  pir = new Gpio(24, 'in');
+  pir = new Gpio(2, 'in');
 
 setInterval(function () {
   pir.read(function(err, value) {
