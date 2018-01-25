@@ -15,7 +15,7 @@ var MICROSECDONDS_PER_CM = 1e6 / 34321;
 trigger.digitalWrite(0); // Make sure trigger is low
 
 (function () {
-  var startTick;
+  var startTick, distance = 0;
 
   console.log("Started program");
   echo.on('alert', function (level, tick) {
@@ -26,7 +26,11 @@ trigger.digitalWrite(0); // Make sure trigger is low
     } else {
       endTick = tick;
       diff = (endTick >> 0) - (startTick >> 0); // Unsigned 32 bit arithmetic
-      console.log(diff / 2 / MICROSECDONDS_PER_CM);
+      distance = diff / 2 / MICROSECDONDS_PER_CM;
+    }
+
+    if (distance > 2 && distance < 300) {
+      console.log(distance);
     }
   });
 }());
@@ -34,4 +38,4 @@ trigger.digitalWrite(0); // Make sure trigger is low
 // Trigger a distance measurement once per second
 setInterval(function () {
   trigger.trigger(10, 1); // Set trigger high for 10 microseconds
-}, 1000);
+}, 100);
