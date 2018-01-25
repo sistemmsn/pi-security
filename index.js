@@ -1,10 +1,10 @@
 'use strict';
 
 var Gpio = require('pigpio').Gpio;
-var trigger = new Gpio(23, {
+var trigger = new Gpio(11, {
   mode: Gpio.OUTPUT
 });
-var echo = new Gpio(24, {
+var echo = new Gpio(8, {
   mode: Gpio.INPUT,
   alert: true
 });
