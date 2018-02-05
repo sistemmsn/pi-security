@@ -1,16 +1,19 @@
 'use strict';
 
-// Code snippet from 
-var Gpio = require('pigpio').Gpio;
+var piCamera = require("./src/camera");
+var Promise = require("promise");
+var Gpio = require("pigpio").Gpio;
 var sensor = new Gpio(23, {
   mode: Gpio.INPUT,
   alert: true
 });
 
-(function checkForObstacle() {
-  var startTick, distance = 0;
-
-  sensor.on('alert', function (level) {
+(() => {
+  sensor.on('alert', () => {
     console.log("Motion Detected");
+
+    piCamera.captureImage().then(data => {
+      console.log(data);
+    })
   });
 })();

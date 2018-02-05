@@ -1,7 +1,7 @@
 {
   "name": "pi-security",
   "version": "1.0.0",
-  "description": "Using Rasp Pi with a HC-SR04 and a Camera Module",
+  "description": "Using Rasp Pi with a HC-SR501 and a Camera Module",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,7 +10,8 @@
   "license": "ISC",
   "dependencies": {
     "moment": "^2.20.1",
-    "onoff": "^1.1.9",
-    "pigpio": "^0.6.4"
+    "pigpio": "^0.6.4",
+    "promise": "^8.0.1",
+    "raspicam": "^0.2.14"
   }
 }
