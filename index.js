@@ -24,7 +24,7 @@ var hasMotion = false;
   });
 })();
 
-delayDetection = () => {
+var delayDetection = () => {
   setTimeout(() => {
     hasMotion = false;
   }, 60000);
