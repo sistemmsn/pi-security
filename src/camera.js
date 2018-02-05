@@ -3,7 +3,7 @@ var Promise = require("promise");
 
 var camera = new RaspiCam({
   mode: "photo",
-  output: "room-pi_%s"
+  output: "../output/room-pi_%d"
 });
 
 exports.captureImage = () => {
