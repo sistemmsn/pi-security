@@ -3,7 +3,10 @@ var Promise = require("promise");
 
 var camera = new RaspiCam({
   mode: "photo",
-  output: __dirname + "/output/room-pi_%d"
+  output: __dirname + "/output/room-pi_%d",
+  quality: 100,
+  width: 1920,
+  height: 1080
 });
 
 exports.captureImage = () => {
