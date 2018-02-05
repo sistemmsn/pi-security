@@ -10,8 +10,7 @@ var sensor = new Gpio(23, {
 (function checkForObstacle() {
   var startTick, distance = 0;
 
-  sensor.on('alert', function (level, tick) {
-    console.log(level, tick);
-    console.log("Motion Detected");ß
+  sensor.on('alert', function (level) {
+    console.log("Motion Detected");
   });
 })();
