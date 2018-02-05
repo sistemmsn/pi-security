@@ -6,7 +6,8 @@ var camera = new RaspiCam({
   output: __dirname + "/output/room-pi_%d",
   quality: 100,
   width: 1920,
-  height: 1080
+  height: 1080,
+  rotation: 90
 });
 
 exports.captureImage = () => {
