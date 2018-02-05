@@ -3,17 +3,29 @@
 var piCamera = require("./src/camera");
 var Promise = require("promise");
 var Gpio = require("pigpio").Gpio;
+
 var sensor = new Gpio(23, {
   mode: Gpio.INPUT,
   alert: true
 });
+var hasMotion = false;
 
 (() => {
   sensor.on('alert', () => {
-    console.log("Motion Detected");
+    if (!hasMotion) {
+      console.log("Motion Detected");
+      hasMotion = true;
+      delayDetection();
 
-    piCamera.captureImage().then(data => {
-      console.log(data);
-    })
+      piCamera.captureImage().then(data => {
+        console.log(data);
+      })
+    }
   });
 })();
+
+delayDetection = () => {
+  setTimeout(() => {
+    hasMotion = false;
+  }, 60000);
+};
