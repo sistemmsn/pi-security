@@ -1,3 +1,4 @@
+require('dotenv').config();
 var fs = require('fs');
 var Promise = require("promise");
 var admin = require('firebase-admin');
