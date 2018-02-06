@@ -9,6 +9,8 @@
   "author": "Tobi Akerele",
   "license": "ISC",
   "dependencies": {
+    "firebase-admin": "^5.8.2",
+    "fs": "0.0.1-security",
     "moment": "^2.20.1",
     "pigpio": "^0.6.4",
     "promise": "^8.0.1",
