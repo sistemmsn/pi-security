@@ -17,7 +17,7 @@ exports.uploadImage = (filename, timestamp, location) => {
   const bucket = storage.bucket("images");
   const destination = `${location}/${newName}`;
 
-  return bucket.upload(filename, { destination: destination })
+  return bucket.upload(`output/${filename}`, { destination: destination })
     .then(res => {
       var imageRef = db.ref(`images/${location}`);
 
