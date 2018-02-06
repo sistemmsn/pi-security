@@ -1,10 +1,12 @@
 'use strict';
 
-var piCamera = require("./src/camera");
-var Promise = require("promise");
-var Gpio = require("pigpio").Gpio;
+const piCamera = require("./src/camera");
+const imgUploader = require('./src/data-uploader');
+const Promise = require("promise");
+const Gpio = require("pigpio").Gpio;
 
-var sensor = new Gpio(23, {
+// NOTE: Input is GPIO23 assuming you are using the BCM numbering
+const sensor = new Gpio(23, {
   mode: Gpio.INPUT,
   alert: true
 });
@@ -15,16 +17,18 @@ var hasMotion = false;
     if (!hasMotion) {
       console.log("Motion Detected");
       hasMotion = true;
-      delayDetection();
+      delayDetection();   // Don't
 
       piCamera.captureImage().then(data => {
-        console.log(data);
+        const fileName = data.fileName;
+        const timestamp = data.timestamp;
+        imgUploader.uploadImage(fileName, timestamp, 'bedroom');
       })
     }
   });
 })();
 
-var delayDetection = () => {
+const delayDetection = () => {
   setTimeout(() => {
     hasMotion = false;
   }, 60000);

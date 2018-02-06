@@ -11,9 +11,8 @@ admin.initializeApp({
 const storage = admin.storage();
 const db = admin.database();
 
-exports.uploadImage = (filename, location) => {
-  const curTime = new Date().getTime() / 1000;
-  const newName =  curTime + ".jpg";
+exports.uploadImage = (filename, timestamp, location) => {
+  const newName =  timestamp + ".jpg";
   const bucket = storage.bucket("images");
   const destination = `${location}/${newName}`;
 
