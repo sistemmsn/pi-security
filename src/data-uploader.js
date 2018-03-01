@@ -13,22 +13,26 @@ const storage = admin.storage();
 const db = admin.database();
 
 exports.uploadImage = (filename, timestamp, location) => {
-  const newName =  timestamp + ".jpg";
+  const newName = timestamp + ".jpg";
   const bucket = storage.bucket("images");
   const destination = `${location}/${newName}`;
 
-  return bucket.upload(`output/${filename}`, { destination: destination })
+  return bucket.upload(`output/${filename}`, {
+      destination: destination
+    })
     .then(res => {
       var imageRef = db.ref(`images/${location}`);
+      console.log(destination, res.toString());
 
-      bucket.file(destination).getMetadata().then(results => {
+      return bucket.file(destination).getMetadata().then(results => {
         const metadata = results[0];
         const imageUrl = metadata.selfLink;
-        imageRef.set({
+        var data = {
           imageUrl: imageUrl,
           timestamp: curTime,
           name: newName
-        })
+        };
+        return imageRef.set(data);
       })
     });
 }
