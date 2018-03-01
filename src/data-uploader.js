@@ -32,6 +32,7 @@ exports.uploadImage = (filename, timestamp, location) => {
           timestamp: curTime,
           name: newName
         };
+        console.log(data);
         return imageRef.set(data);
       })
     });
