@@ -18,6 +18,7 @@ exports.captureImage = () => {
     if (!isCapturingImage) reject({ error: "Can't take an image." });
 
     camera.on("read", (err, timestamp, filename) => {
+      camera.stop();
       if (err) reject({ error: err });
 
       resolve({
