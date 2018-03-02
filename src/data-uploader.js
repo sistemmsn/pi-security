@@ -17,23 +17,28 @@ exports.uploadImage = (filename, timestamp, location) => {
   const bucket = storage.bucket("images");
   const destination = `${location}/${newName}`;
 
-  return bucket.upload(`${__dirname}/output/${filename}`, {
-      destination: destination
-    })
-    .then(res => {
-      var imageRef = db.ref(`images/${location}`);
-      console.log(destination, res.toString());
+  var fileToUpload = bucket.file(`${__dirname}/output/${filename}`);
 
-      return bucket.file(destination).getMetadata().then(results => {
-        const metadata = results[0];
-        const imageUrl = metadata.selfLink;
-        var data = {
-          imageUrl: imageUrl,
-          timestamp: curTime,
-          name: newName
-        };
-        console.log(data);
-        return imageRef.set(data);
-      })
+  const blobStream = fileToUpload.createWriteStream({
+    metadata: {
+      contentType: "image/jpeg"
+    }
+  });
+
+  blobStream.on('error', (error) => {
+
+  });
+
+  blobStream.on('finish', () => {
+    // The public URL can be used to directly access the file via HTTP.
+    const url = format(`https://storage.googleapis.com/${bucket.name}/${fileUpload.name}`);
+    const imageRef = db.ref(`images/${location}`);
+
+    console.log(url);
+    imageRef.set({
+      imageUrl: url,
+      timestamp: timestamp,
+      name: newName
     });
+  });
 }
