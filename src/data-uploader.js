@@ -26,7 +26,7 @@ exports.uploadImage = (filename, timestamp, location) => {
   });
 
   blobStream.on('error', (error) => {
-
+    console.log(error);
   });
 
   blobStream.on('finish', () => {
