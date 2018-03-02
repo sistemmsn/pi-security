@@ -23,6 +23,8 @@ var hasMotion = false;
         const fileName = data.fileName;
         const timestamp = data.timestamp;
         imgUploader.uploadImage(fileName, timestamp, 'bedroom');
+      }).catch(err => {
+        console.log(err.message);
       })
     }
   });

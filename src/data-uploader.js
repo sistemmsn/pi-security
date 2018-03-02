@@ -17,7 +17,9 @@ exports.uploadImage = (filename, timestamp, location) => {
   const bucket = storage.bucket("images");
   const destination = `${location}/${newName}`;
 
-  var fileToUpload = bucket.file(`${__dirname}/output/${filename}`);
+  const fileToUpload = bucket.file(`${__dirname}/output/${filename}`);
+
+  console.log(__dirname, destination, bucket.name, fileToUpload.name);
 
   const blobStream = fileToUpload.createWriteStream({
     metadata: {

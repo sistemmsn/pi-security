@@ -12,14 +12,16 @@ var camera = new RaspiCam({
   timeout: 0
 });
 
+const imgErrorMessage = "Can't take an image.";
+
 exports.captureImage = () => {
   var isCapturingImage = camera.start();
   return new Promise((resolve, reject) => {
-    if (!isCapturingImage) reject({ error: "Can't take an image." });
+    if (!isCapturingImage) reject({ message: imgErrorMessage });
 
     camera.on("read", (err, timestamp, filename) => {
       camera.stop();
-      if (err) reject({ error: err });
+      if (err) reject({ message: imgErrorMessage, error: err });
 
       resolve({
         timestamp: timestamp / 1000, // Convert from milliseconds
