@@ -34,5 +34,5 @@ $RECYCLE.BIN/
 Thumbs.db
 UserInterfaceState.xcuserstate
 
-config/service_account.json
+server/config/*
 output/room_pi.jpg

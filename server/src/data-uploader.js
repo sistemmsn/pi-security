@@ -3,7 +3,7 @@ var fs = require('fs');
 var Promise = require("promise");
 var admin = require('firebase-admin');
 
-const serviceAccount = require("../config/firebase_acct.json");
+const serviceAccount = require("../config/service_account.json");
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),

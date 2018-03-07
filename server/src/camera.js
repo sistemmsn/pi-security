@@ -2,8 +2,8 @@ var RaspiCam = require("raspicam");
 var Promise = require("promise");
 
 var camera = new RaspiCam({
-  mode: "photo",
-  output: __dirname + "/output/room-pi.jpg",
+  mode: "photo",      // Or timelapse
+  output: __dirname + "/output/room-pi.jpg",    // Add %d if timelapse for int increments.
   quality: 100,
   width: 1920,
   height: 1080,
