@@ -11,36 +11,38 @@ admin.initializeApp({
 });
 const storage = admin.storage();
 const db = admin.database();
+const PROJECT_ID = serviceAccount.project_id;
 
 exports.uploadImage = (filename, timestamp, location) => {
   const newName = timestamp + ".jpg";
-  const bucket = storage.bucket("images");
+  const bucket = storage.bucket(PROJECT_ID + '.appspot.com');
   const destination = `${location}/${newName}`;
+  const imageRef = db.ref(`images/${location}`);
 
-  const fileToUpload = bucket.file(`${__dirname}/output/${filename}`);
-
-  console.log(__dirname, destination, bucket.name, fileToUpload.name);
-
-  const blobStream = fileToUpload.createWriteStream({
+  const options = {
+    destination: destination,
+    public: true,
     metadata: {
       contentType: "image/jpeg"
     }
-  });
+  };
 
-  blobStream.on('error', (error) => {
-    console.log(error);
-  });
+  return bucket.upload(`${__dirname}/output/${filename}`, options)
+    .then(res => res[0])
+    .then(res => {
+      // The public URL can be used to directly access the file via HTTP.
+      const url = `https://storage.googleapis.com/${bucket.name}/${res.name}`;
 
-  blobStream.on('finish', () => {
-    // The public URL can be used to directly access the file via HTTP.
-    const url = format(`https://storage.googleapis.com/${bucket.name}/${fileUpload.name}`);
-    const imageRef = db.ref(`images/${location}`);
-
-    console.log(url);
-    imageRef.set({
-      imageUrl: url,
-      timestamp: timestamp,
-      name: newName
+      return {
+        imageUrl: url,
+        timestamp: timestamp,
+        name: newName
+      };
+    })
+    .catch(err => {
+      return { error: err };
+    })
+    .then(data => {
+      return imageRef.push(data);
     });
-  });
 }
