@@ -17,14 +17,11 @@ exports.uploadImage = (filename, timestamp, location) => {
   const newName = timestamp + ".jpg";
   const bucket = storage.bucket(PROJECT_ID + '.appspot.com');
   const destination = `${location}/${newName}`;
-  const imageRef = db.ref(`images/${location}`);
+  const imageRef = db.ref(`imageLogs/${location}`);
 
   const options = {
     destination: destination,
-    public: true,
-    metadata: {
-      contentType: "image/jpeg"
-    }
+    public: true
   };
 
   return bucket.upload(`${__dirname}/output/${filename}`, options)
@@ -35,8 +32,7 @@ exports.uploadImage = (filename, timestamp, location) => {
 
       return {
         imageUrl: url,
-        timestamp: timestamp,
-        name: newName
+        timestamp: timestamp
       };
     })
     .catch(err => {
