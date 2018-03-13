@@ -24,7 +24,7 @@ exports.captureImage = () => {
       if (err) reject({ message: imgErrorMessage, error: err });
 
       resolve({
-        timestamp: parseInt(timestamp / 1000), // Convert from milliseconds
+        timestamp: timestamp,
         fileName: filename
       });
     })
