@@ -8,19 +8,20 @@ var log_file = fs.createWriteStream(logFilePath, {
 });
 
 exports.logMotion = (data) => {
+  console.log(data);
   const destDir = `${root}/log/`;
   const filename = data.filename;
   const timestamp = data.timestamp;
 
   fs.access(destDir, (err) => {
     if (err) {
-      // If the directory does not exist, create a director
+      // If the directory does not exist, create a directory
       fs.mkdirSync(destDir);
     }
 
-    transferFile(`${__dirname}/output/${data.filename}`, path.join(destDir, `${data.timestamp}.jpg`));
+    transferFile(`${__dirname}/output/${filename}`, path.join(destDir, `${timestamp}.jpg`));
   });
-  log_file.write(`${data.filename} was logged at ${new Date(data.timestamp).toLocaleDateString()}\n`);
+  log_file.write(`${filename} was logged at ${new Date(timestamp).toLocaleString()}\n`);
 }
 
 const transferFile = (src, dest) => {
