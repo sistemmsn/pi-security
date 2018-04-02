@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const root = __dirname.split("src")[0];
-const logFilePath = path.join(root, '/output .log'); // Amateur hour shit
+const logFilePath = path.join(root, '/output.log'); // Amateur hour shit
 
 var log_file = fs.createWriteStream(logFilePath, {
   flags: 'a'

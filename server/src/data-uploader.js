@@ -13,14 +13,13 @@ const storage = admin.storage();
 const db = admin.database();
 const PROJECT_ID = serviceAccount.project_id;
 
-exports.uploadImage = (filename, timestamp, location) => {
+exports.uploadImage = (filename, timestamp, location, distance) => {
   const newName = parseInt(timestamp / 1000) + ".jpg";
   const bucket = storage.bucket(PROJECT_ID + '.appspot.com');
-  const destination = `${location}/${newName}`;
   const imageRef = db.ref(`imageLogs/${location}`);
 
   const options = {
-    destination: destination,
+    destination: newName,
     public: true
   };
 
@@ -32,7 +31,8 @@ exports.uploadImage = (filename, timestamp, location) => {
 
       return {
         imageUrl: url,
-        timestamp: timestamp   
+        timestamp: timestamp,
+        distance: distance   
       };
     })
     .catch(err => {
