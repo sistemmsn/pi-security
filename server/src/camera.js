@@ -25,7 +25,7 @@ exports.captureImage = () => {
 
       resolve({
         timestamp: timestamp,
-        fileName: filename
+        filename: filename
       });
     })
   });

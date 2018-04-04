@@ -8,7 +8,6 @@ var log_file = fs.createWriteStream(logFilePath, {
 });
 
 exports.logMotion = (data) => {
-  console.log(data);
   const destDir = `${root}/log/`;
   const filename = data.filename;
   const timestamp = data.timestamp;

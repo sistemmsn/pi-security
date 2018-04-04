@@ -13,6 +13,7 @@
     "dotenv": "^5.0.0",
     "firebase-admin": "^5.8.2",
     "fs": "0.0.1-security",
+    "magic-home": "^1.1.1",
     "moment": "^2.20.1",
     "path": "^0.12.7",
     "pigpio": "^0.6.4",

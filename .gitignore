@@ -34,5 +34,6 @@ $RECYCLE.BIN/
 Thumbs.db
 UserInterfaceState.xcuserstate
 
-server/config/*
+server/config/
 output/room_pi.jpg
+environments/
