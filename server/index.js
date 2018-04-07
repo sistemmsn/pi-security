@@ -75,9 +75,9 @@ var saveImage = (distance) => {
   if (!hasMotion) {
     hasMotion = true;
     roomLight.turnOn()
-      .then(response => console.log("LIGHT Response", response))
       .then(() => {
         piCamera.captureImage().then(data => {
+          delayDetection();
           roomLight.turnOff();
           fileLogger.logMotion(data);
           return imgUploader.uploadImage(data.filename, data.timestamp, 'bedroom', distance);

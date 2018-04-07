@@ -2,14 +2,21 @@ var MagicHomeControl = require('magic-home').Control;
 const Promise = require("promise");
 
 var light = new MagicHomeControl("192.168.86.173");
+// TODO: Probably shouldn't be hardcoded
 
 module.exports = {
     turnOn: () => {
         return new Promise((resolve, reject) => {
-            return light.turnOn((err, success) => {
-                if (err) reject(err);
-                resolve(success);
-            });
+            const today = new Date().getHours();
+            // TODO: Make this variable a setting in Mobile App
+            if (today <= 9 && today >= 23) { // If the hours are between 11pm and 9am you may not want to be disturbed
+                resolve("Dark Hours");
+            } else {
+                return light.turnOn((err, success) => {
+                    if (err) reject(err);
+                    resolve(success);
+                });
+            }
         });
     },
     turnOff: () => {
