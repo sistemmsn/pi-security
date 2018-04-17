@@ -4,6 +4,7 @@ const piCamera = require("./src/camera");
 const imgUploader = require('./src/data-uploader');
 const fileLogger = require('./src/logger');
 const roomLight = require('./src/lights');
+const calculator = require('./src/distance-calculator');
 const Promise = require("promise");
 const Gpio = require("pigpio").Gpio;
 
@@ -50,16 +51,17 @@ setInterval(() => {
       arrDistance.push(distance); // Push the distance into an array
     }
 
-    // If the sample size of distances is 4 or higher
+    // If the sample size of distances is greater than 4
     if (arrDistance.length > 4) {
-      polledDistance = parseFloat(median(arrDistance).toFixed(2)); // Get the most likely value from
+      polledDistance = parseFloat(calculator.median(arrDistance).toFixed(2)); // Get the most likely value from
       console.log("POLLED: " + polledDistance + "cm");
       arrPolledDistance.push(polledDistance);
       arrDistance = [];
 
       if (arrPolledDistance.length > 10) {
         arrPolledDistance.shift(); // remove the first element in the array.
-        if (isDistanceDeviating(arrPolledDistance)) {
+        if (calculator.isDistanceDeviating(arrPolledDistance)) {
+          arrPolledDistance = [];
           saveImage(polledDistance);
         }
       }
@@ -77,8 +79,8 @@ var saveImage = (distance) => {
     roomLight.turnOn()
       .then(() => {
         piCamera.captureImage().then(data => {
-          delayDetection();
           roomLight.turnOff();
+          delayDetection();
           fileLogger.logMotion(data);
           return imgUploader.uploadImage(data.filename, data.timestamp, 'bedroom', distance);
         }).catch(err => {
@@ -93,49 +95,3 @@ const delayDetection = () => {
     hasMotion = false;
   }, 60000);
 };
-
-// Source: https://gist.github.com/caseyjustus/1166258
-var median = (values) => {
-  values.sort((a, b) => {
-    return a - b;
-  });
-
-  var half = Math.floor(values.length / 2);
-
-  if (values.length % 2)
-    return values[half];
-  else
-    return (values[half - 1] + values[half]) / 2.0;
-}
-
-var isDistanceDeviating = (values) => {
-  // Using 5 for no real reason, as program is developed a more suitable number will be used.
-  // console.log("DEVIATION: ", standardDeviation(values).toFixed(2));
-  return standardDeviation(values) > 5 ? true : false;
-}
-
-/**
- * Use standard deviation to check if a value deviates from the polled distances
- */
-var standardDeviation = (values) => {
-  var avg = average(values);
-
-  var squareDiffs = values.map(function (value) {
-    var diff = value - avg;
-    var sqrDiff = diff * diff;
-    return sqrDiff;
-  });
-
-  var avgSquareDiff = average(squareDiffs);
-
-  var stdDev = Math.sqrt(avgSquareDiff);
-  return stdDev;
-}
-
-var average = (data) => {
-  var sum = data.reduce(function (sum, value) {
-    return sum + value;
-  }, 0);
-
-  return sum / data.length;
-}

@@ -37,4 +37,3 @@ module.exports = {
     }
 
 }
-module.exports.turnOff();

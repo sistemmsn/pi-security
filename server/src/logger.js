@@ -18,7 +18,7 @@ exports.logMotion = (data) => {
       fs.mkdirSync(destDir);
     }
 
-    transferFile(`${__dirname}/output/${filename}`, path.join(destDir, `${timestamp}.jpg`));
+    // transferFile(`${__dirname}/output/${filename}`, path.join(destDir, `${timestamp}.jpg`));
   });
   log_file.write(`${filename} was logged at ${new Date(timestamp).toLocaleString()}\n`);
 }
