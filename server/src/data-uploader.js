@@ -1,16 +1,10 @@
 require('dotenv').config();
 var fs = require('fs');
 var Promise = require("promise");
-var admin = require('firebase-admin');
+var firebaseAdmin = require('./config').admin;
 
-const serviceAccount = require("../config/service_account.json");
-
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount),
-  databaseURL: process.env.DATABASE_URL
-});
-const storage = admin.storage();
-const db = admin.database();
+const storage = firebaseAdmin.storage();
+const db = firebaseAdmin.database();
 const PROJECT_ID = serviceAccount.project_id;
 
 exports.uploadImage = (filename, timestamp, location) => {
