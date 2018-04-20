@@ -1,15 +1,14 @@
 require('dotenv').config();
 var fs = require('fs');
 var Promise = require("promise");
-var firebaseAdmin = require('./config').admin;
+var firebaseAdmin = require('./config');
 
-const storage = firebaseAdmin.storage();
-const db = firebaseAdmin.database();
-const PROJECT_ID = serviceAccount.project_id;
+const storage = firebaseAdmin.admin.storage();
+const db = firebaseAdmin.admin.database();
 
 exports.uploadImage = (filename, timestamp, location) => {
   const newName = parseInt(timestamp / 1000) + ".jpg";
-  const bucket = storage.bucket(PROJECT_ID + '.appspot.com');
+  const bucket = storage.bucket(firebaseAdmin.PROJECT_ID + '.appspot.com');
   const imageRef = db.ref(`imageLogs/${location}`);
 
   const options = {
