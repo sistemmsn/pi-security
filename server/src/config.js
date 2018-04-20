@@ -10,5 +10,6 @@ admin.initializeApp({
 
 module.exports = {
     PROJECT_ID: PROJECT_ID,
-    admin: admin
+    admin: admin,
+    LOCATION: 'bedroom'
 };

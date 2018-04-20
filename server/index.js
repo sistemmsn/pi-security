@@ -6,11 +6,10 @@ const dbLogger = require('./src/logger');
 const roomLight = require('./src/lights');
 const Promise = require("promise");
 const Gpio = require("pigpio").Gpio;
+const config = require('./src/config');
 
-const firebaseAdmin = require('./src/config').admin;
+const firebaseAdmin = config.admin;
 const db = firebaseAdmin.database();
-
-const LOCATION = 'bedroom';
 
 // NOTE: Input is GPIO23 assuming you are using the BCM numbering
 const sensor = new Gpio(23, { // 16
