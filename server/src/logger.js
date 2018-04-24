@@ -1,18 +1,26 @@
 const fs = require('fs');
 const path = require('path');
 const root = __dirname.split("src")[0];
+const config = require('./config');
 
-var firebaseAdmin = require('./config').admin;
+var firebaseAdmin = config.admin;
 const db = firebaseAdmin.database();
+const LOCATION = config.LOCATION;
 var logRef = db.ref(`dataLogs/${LOCATION}/`);
 
 exports.logMotion = (data) => {
   const filename = data.filename;
-  const timestamp = data.timestamp;
+  const timestamp = Math.floor(data.timestamp/1000);
 
-  logRef.push(`${filename} was logged at ${new Date(timestamp).toLocaleString()}\n`);
+  return logRef.push({
+    eventType: 'log',
+    timestamp: timestamp
+  });
 }
 
 exports.logStartup = () => {
-  logRef.push(`Startup bedroom pi at ${new Date(timestamp).toLocaleString()}`)
+  return logRef.push({
+    eventType: 'startup',
+    timestamp: Math.floor((new Date).getTime()/1000)
+  });
 }

@@ -12,18 +12,11 @@ export class ActionProvider {
   }
 
   takeImage(location: string) {
-    let child = this.ref.child(`controls/${location}/takeImage`);
-    return child.set(true)
-      .then(() => {
-        return child.set(false);
-      })
+    return this.ref.child(`settings/${location}/takeImage`).set(true);
   }
 
-  getLogSetting(location: string) {
-    return this.ref.child(`settings/${location}/isLogging`)
-      .once('value', snap => {
-        return snap.val();
-      });
+  getLogSetting(location: string): Reference {
+    return this.ref.child(`settings/${location}/isLogging`);
   }
 
   setLogSetting(location: string, value: boolean) {

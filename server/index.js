@@ -10,6 +10,7 @@ const config = require('./src/config');
 
 const firebaseAdmin = config.admin;
 const db = firebaseAdmin.database();
+const LOCATION = config.LOCATION;
 
 // NOTE: Input is GPIO23 assuming you are using the BCM numbering
 const sensor = new Gpio(23, { // 16
@@ -26,7 +27,7 @@ var isLogging = false;
 (() => {
   console.log("Started program");
 
-  logSetting();
+  logSettings();
   remoteCaptureImage();
   dbLogger.logStartup();
 
@@ -40,7 +41,7 @@ var isLogging = false;
   });
 })();
 
-var logSetting = () => {
+function logSettings() {
   var settingsRef = db.ref(`settings/${LOCATION}/`);
 
   // Listen to event when the value of isLogging changes (true or false)
@@ -51,13 +52,15 @@ var logSetting = () => {
   });
 }
 
-var remoteCaptureImage = () => {
-  var remoteRef = db.ref(`controls/${LOCATION}/`);
+function remoteCaptureImage() {
+  var remoteRef = db.ref(`settings/${LOCATION}/`);
 
   // Listen to event when value for takeImage changes (true or false)
-  remoteRef.child('takeImage').on('child_changed', snap => {
-    if (snap.exists() && snap.val()) {
-      remoteRef.child('lastImageTimestamp').set(new Date().toLocaleString())
+  remoteRef.child('takeImage').on('value', snap => {
+    if (snap.val()) {
+      remoteRef.update({
+        takeImage: false
+      })
       saveImage();
     }
   })
@@ -73,8 +76,10 @@ var saveImage = () => {
       piCamera.captureImage().then(data => {
         roomLight.turnOff();
         delayDetection();
-        dbLogger.logMotion(data);
-        return imgUploader.uploadImage(data.filename, data.timestamp, LOCATION);
+        return dbLogger.logMotion(data)
+          .then(info => {
+            imgUploader.uploadImage(data.filename, data.timestamp, LOCATION, info.key);
+          })
       }).catch(err => {
         console.log(err);
       })

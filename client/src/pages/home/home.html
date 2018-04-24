@@ -10,10 +10,24 @@
       <ion-icon name="logo-instagram"></ion-icon>
     </button>
   </ion-card>
-  <ion-list>
-    <ion-item>
-      <ion-label>Toggle Surveillance</ion-label>
-      <ion-toggle disabled (click)="toggleSurveillance()" checked="getSurveillance"></ion-toggle>
-    </ion-item>
-  </ion-list>
+  <ion-card>
+    <ion-list>
+      <ion-item>
+        <ion-label>{{surveillanceState}} Surveillance</ion-label>
+        <ion-toggle (ionChange)="toggleSurveillance($event)" checked="isSurveilling"></ion-toggle>
+      </ion-item>
+    </ion-list>
+  </ion-card>
+  <ion-card class="last-data-section">
+    <ion-card-title *ngIf="lastTime">Image Taken: {{lastTime | fromNow}}</ion-card-title>
+    <ion-card-content>
+      <img class="last-image" src="{{lastImage}}">
+    </ion-card-content>
+  </ion-card>
+  <ion-card class="system-section">
+    <ion-card-title>Image Tags:</ion-card-title>
+    <ion-card-content>
+      {{lastImageData | json}}
+    </ion-card-content>
+  </ion-card>
 </ion-content>

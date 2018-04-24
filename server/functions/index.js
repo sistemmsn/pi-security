@@ -3,34 +3,37 @@
 const functions = require('firebase-functions');
 const vision = require('@google-cloud/vision');
 const gcs = require('@google-cloud/storage')();
+const admin = require('firebase-admin');
+
+admin.initializeApp();
 
 // Creates a client
 const client = new vision.ImageAnnotatorClient();
-vision = vision();
 
-exports.imageToJPG = functions.storage.object().onChange((event) => {
-  const object = event.data;
-  const filePath = object.name;
-  const fileUri = `gs://${bucketName}/${fileName}`;
-
-  // Exit if this is a move or deletion event.
-  if (object.resourceState === 'not_exists') {
-    return console.log('This is a deletion event.');
-  }
+exports.imageToJPG = functions.storage.object().onFinalize((object) => {
+  const bucket = object.bucket;
+  const fileName = object.name;
+  console.log(object);
+  const fileUri = `gs://${bucket}/${fileName}`;
+  const key = fileName.split('.')[0];
 
   // Performs face detection on the gcs file
-  client.faceDetection(fileUri)
+  return client.faceDetection(fileUri)
     .then(results => {
       const faces = results[0].faceAnnotations;
-
-      console.log('Faces:');
+      var data = [];
       faces.forEach((face, i) => {
-        console.log(`  Face #${i + 1}:`);
-        console.log(`    Joy: ${face.joyLikelihood}`);
-        console.log(`    Anger: ${face.angerLikelihood}`);
-        console.log(`    Sorrow: ${face.sorrowLikelihood}`);
-        console.log(`    Surprise: ${face.surpriseLikelihood}`);
+        data.push({
+          face: i + 1,
+          joy: face.joyLikelihood,
+          anger: face.angerLikelihood,
+          sorrow: face.sorrowLikelihood,
+          surprise: face.surpriseLikelihood
+        })
       });
+
+      // TODO: Remove hardcoded room
+      return admin.database().ref(`infoLogs/bedroom/${key}`).set(data)
     })
     .catch(err => {
       console.error('ERROR:', err);

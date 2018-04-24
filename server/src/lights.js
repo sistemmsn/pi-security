@@ -9,7 +9,7 @@ module.exports = {
         return new Promise((resolve, reject) => {
             const hour = new Date().getHours();
             // TODO: Make this variable a setting in Mobile App
-            if (hour <= 9 && hour >= 23) { // If the hours are between 11pm and 9am you may not want to be disturbed
+            if (hour <= 9 || hour >= 23) { // If the hours are between 11pm and 9am you may not want to be disturbed
                 resolve("Dark Hours");
             } else {
                 return light.turnOn((err, success) => {

@@ -1,17 +1,26 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AngularFireDatabase } from 'angularfire2/database';
+import { Reference, Query } from '@firebase/database-types';
 
-/*
-  Generated class for the DataProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class DataProvider {
+  ref: Reference;
 
-  constructor(public http: HttpClient) {
-    console.log('Hello DataProvider Provider');
+  constructor(public http: HttpClient, public db: AngularFireDatabase) {
+    this.ref = this.db.database.ref();
+  }
+
+  lastImage(location: string): Query {
+    return this.ref.child(`imageLogs/${location}`)
+      .orderByKey()
+      .limitToLast(1);
+  }
+
+  lastImageTags(location: string): Query {
+    return this.ref.child(`infoLogs/${location}`)
+      .orderByKey()
+      .limitToLast(1);
   }
 
 }

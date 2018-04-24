@@ -6,14 +6,14 @@ var firebaseAdmin = require('./config');
 const storage = firebaseAdmin.admin.storage();
 const db = firebaseAdmin.admin.database();
 
-exports.uploadImage = (filename, timestamp, location) => {
-  const newName = parseInt(timestamp / 1000) + ".jpg";
+exports.uploadImage = (filename, timestamp, location, key) => {
+  const newName = key + ".jpg";
   const bucket = storage.bucket(firebaseAdmin.PROJECT_ID + '.appspot.com');
-  const imageRef = db.ref(`imageLogs/${location}`);
+  const imageRef = db.ref(`imageLogs/${location}/${key}`);
 
   const options = {
     destination: newName,
-    public: true
+    public: true,
   };
 
   return bucket.upload(`${__dirname}/output/${filename}`, options)
@@ -24,13 +24,15 @@ exports.uploadImage = (filename, timestamp, location) => {
 
       return {
         imageUrl: url,
-        timestamp: timestamp
+        timestamp: Math.floor(timestamp / 1000)
       };
     })
     .catch(err => {
-      return { error: err };
+      return {
+        error: err
+      };
     })
     .then(data => {
-      return imageRef.push(data);
+      return imageRef.set(data);
     });
 }

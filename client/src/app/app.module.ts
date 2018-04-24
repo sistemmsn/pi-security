@@ -1,3 +1,4 @@
+import { PipesModule } from './../pipes/pipes.module';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
@@ -15,7 +16,7 @@ import { AngularFireModule } from 'angularfire2';
 import { environment } from '../environments/environment';
 import { ActionProvider } from '../providers/action/action';
 import { DataProvider } from '../providers/data/data';
-import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
 
 @NgModule({
   declarations: [
@@ -27,8 +28,9 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
     BrowserModule,
     HttpClientModule,
     IonicModule.forRoot(MyApp),
-    AngularFireModule.initializeApp(environment.firebase),    
-    AngularFireDatabaseModule
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireDatabaseModule,
+    PipesModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -39,10 +41,11 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
   providers: [
     StatusBar,
     SplashScreen,
-    HttpClientModule,
-    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    HttpClientModule, 
+    AngularFireDatabase,
+    { provide: ErrorHandler, useClass: IonicErrorHandler },
     ActionProvider,
     DataProvider
   ]
 })
-export class AppModule {}
+export class AppModule { }
