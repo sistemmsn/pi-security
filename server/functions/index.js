@@ -13,15 +13,21 @@ const client = new vision.ImageAnnotatorClient();
 exports.imageToJPG = functions.storage.object().onFinalize((object) => {
   const bucket = object.bucket;
   const fileName = object.name;
-  console.log(object);
   const fileUri = `gs://${bucket}/${fileName}`;
   const key = fileName.split('.')[0];
 
   // Performs face detection on the gcs file
-  return client.faceDetection(fileUri)
+  var facePromise = client.faceDetection(fileUri);
+  var labelPromise = client.labelDetection(fileUri);
+  var logoPromise = client.logoDetection(fileUri);
+
+  Promise.all([facePromise, labelPromise, logoPromise])
     .then(results => {
-      const faces = results[0].faceAnnotations;
-      var data = [];
+      var data = {};
+      results = results[0];
+      data['face'] = results[0].faceAnnotations;
+      data['label'] = results[1].labelAnnotations;
+      data['logo'] = results[2].logoAnnotations;
       faces.forEach((face, i) => {
         data.push({
           face: i + 1,
@@ -33,9 +39,11 @@ exports.imageToJPG = functions.storage.object().onFinalize((object) => {
       });
 
       // TODO: Remove hardcoded room
-      return admin.database().ref(`infoLogs/bedroom/${key}`).set(data)
+      return admin.database().ref(`dataLogs/bedroom/${key}`).update(data)
     })
     .catch(err => {
       console.error('ERROR:', err);
     });
+
+  
 });

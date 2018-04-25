@@ -5,11 +5,11 @@ var light = new MagicHomeControl("192.168.86.173");
 // TODO: Probably shouldn't be hardcoded
 
 module.exports = {
-    turnOn: () => {
+    turnOn: (isRemote) => {
         return new Promise((resolve, reject) => {
             const hour = new Date().getHours();
             // TODO: Make this variable a setting in Mobile App
-            if (hour <= 9 || hour >= 23) { // If the hours are between 11pm and 9am you may not want to be disturbed
+            if (!isRemote && hour <= 9 || hour >= 23) { // If the hours are between 11pm and 9am you may not want to be disturbed
                 resolve("Dark Hours");
             } else {
                 return light.turnOn((err, success) => {

@@ -36,7 +36,7 @@ var isLogging = false;
     if (isLogging && !hasMotion) {
       console.log("Motion detected");
       hasMotion = true;
-      saveImage();
+      saveImage(null);
     }
   });
 })();
@@ -61,7 +61,7 @@ function remoteCaptureImage() {
       remoteRef.update({
         takeImage: false
       })
-      saveImage();
+      saveImage(true);
     }
   })
 }
@@ -70,8 +70,8 @@ function remoteCaptureImage() {
  * Turn on the room light, then take a pic, turn off the light
  * Delay for next motion detection, log the image and file timestamp
  */
-var saveImage = () => {
-  roomLight.turnOn()
+var saveImage = (isRemote) => {
+  roomLight.turnOn(isRemote)
     .then(() => {
       piCamera.captureImage().then(data => {
         roomLight.turnOff();

@@ -19,7 +19,7 @@
     </ion-list>
   </ion-card>
   <ion-card class="last-data-section">
-    <ion-card-title *ngIf="lastTime">Image Taken: {{lastTime | fromNow}}</ion-card-title>
+    <ion-card-title *ngIf="lastTime">Image taken {{lastTime | fromNow}}</ion-card-title>
     <ion-card-content>
       <img class="last-image" src="{{lastImage}}">
     </ion-card-content>
