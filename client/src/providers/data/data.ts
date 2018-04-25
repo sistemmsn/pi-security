@@ -29,4 +29,8 @@ export class DataProvider {
     //   .orderByChild('timestamp');
   }
 
+  getAllLogs(location: string) {
+    return this.db.object(`dataLogs/${location}`).valueChanges();
+  }
+
 }

@@ -9,10 +9,12 @@ import { LOCATION } from '../../shared/constants';
   templateUrl: 'home.html'
 })
 export class HomePage {
-  isSurveilling: boolean;
+  isSurveilling: boolean = false;
   surveillanceState: string;
-  isDarkHours: boolean;
+
+  isDarkHours: boolean = false;
   hoursState: string;
+
   lastImage: string;
   lastTime: Date;
   lastImageData: any;
@@ -51,6 +53,7 @@ export class HomePage {
   }
 
   toggleSurveillance(event) {
+    if (this.isSurveilling == event.value) return;
     this.actionProvider.setLogSetting(LOCATION, event.value)
       .then(() => {
         let message = event.value ? "Disabled" : "Enabled";
@@ -60,6 +63,7 @@ export class HomePage {
   }
 
   toggleHours(event) {
+    if (this.isDarkHours == event.value) return;
     this.actionProvider.setDarkHoursSetting(LOCATION, event.value)
       .then(() => {
         let message = event.value ? "Disabled" : "Enabled";

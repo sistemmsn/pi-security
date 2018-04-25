@@ -1,0 +1,14 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Logs</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-card *ngFor="let log of logs">
+    <span class="time">{{log.timestamp | momentDate}}</span>
+    <span class="event-type">
+      This is a {{log.eventType}} event
+    </span>
+  </ion-card>
+</ion-content>

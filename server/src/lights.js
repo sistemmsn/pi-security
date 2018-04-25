@@ -19,10 +19,8 @@ settingsRef.child('isDarkHours').on('value', snap => {
 
 module.exports = {
     turnOn: (isRemote) => {
-
         return new Promise((resolve, reject) => {
-
-            const hour = new Date().getHours();
+            // const hour = new Date().getHours();
             // TODO: Make this variable a setting in Mobile App
             if (!isRemote && isDarkHours) { // If the hours are between 11pm and 9am you may not want to be disturbed
                 resolve("Dark Hours");

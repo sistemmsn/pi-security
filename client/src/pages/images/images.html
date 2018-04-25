@@ -8,7 +8,7 @@
 
 <ion-content padding>
   <ion-card class="image-container" *ngFor="let image of images" >
-    <p>{{image.timestamp | momentDate}}</p>
+    <p class="img-date">{{image.timestamp | momentDate}}</p>
     <img src="{{image.imageUrl}}">
   </ion-card>
 </ion-content>

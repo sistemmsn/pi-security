@@ -17,6 +17,8 @@ import { ActionProvider } from '../providers/action/action';
 import { DataProvider } from '../providers/data/data';
 import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
 import { ImagesPageModule } from '../pages/images/images.module';
+import { LogsPageModule } from '../pages/logs/logs.module';
+import { LogsPage } from '../pages/logs/logs';
 
 @NgModule({
   declarations: [
@@ -31,18 +33,20 @@ import { ImagesPageModule } from '../pages/images/images.module';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
     PipesModule,
-    ImagesPageModule
+    ImagesPageModule, 
+    LogsPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
     HomePage,
-    TabsPage
+    TabsPage,
+    LogsPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    HttpClientModule, 
+    HttpClientModule,
     AngularFireDatabase,
     { provide: ErrorHandler, useClass: IonicErrorHandler },
     ActionProvider,

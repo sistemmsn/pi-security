@@ -34,7 +34,6 @@ var isLogging = false;
   // Listen to event when sensor's value changes (0 or 1)
   sensor.on('alert', () => {
     if (isLogging && !hasMotion) {
-      console.log("Motion detected");
       hasMotion = true;
       saveImage(null);
     }
