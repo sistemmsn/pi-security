@@ -25,10 +25,11 @@ module.exports = {
             if (!isRemote && isDarkHours) { // If the hours are between 11pm and 9am you may not want to be disturbed
                 resolve("Dark Hours");
             } else {
-                return light.turnOn((err, success) => {
-                    if (err) resolve(err);
-                    resolve(success);
-                });
+                resolve("")
+                // return light.turnOn((err, success) => {
+                //     if (err) resolve(err);
+                //     resolve(success);
+                // });
             }
         });
     },
