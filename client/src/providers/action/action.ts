@@ -22,4 +22,12 @@ export class ActionProvider {
   setLogSetting(location: string, value: boolean) {
     return this.ref.child(`settings/${location}/isLogging`).set(value);
   }
+
+  getDarkHoursSetting(location: string): Reference {
+    return this.ref.child(`settings/${location}/isDarkHours`);
+  }
+
+  setDarkHoursSetting(location: string, value: boolean) {
+    return this.ref.child(`settings/${location}/isDarkHours`).set(value);
+  }
 }

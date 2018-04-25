@@ -23,6 +23,7 @@ $ cd server/functions && npm install
 ## Features
 - [ ] Detect motion and take image
 - [ ] Enable/Disable Surveillance
+- [ ] Enable/Disable Dark Hours (for lighting)
 - [ ] Get properties of objects in image
 
 ## Coming Soon

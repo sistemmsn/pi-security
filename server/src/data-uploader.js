@@ -22,17 +22,9 @@ exports.uploadImage = (filename, timestamp, location, key) => {
       // The public URL can be used to directly access the file via HTTP.
       const url = `https://storage.googleapis.com/${bucket.name}/${res.name}`;
 
-      return {
+      return imageRef.set({
         imageUrl: url,
         timestamp: Math.floor(timestamp / 1000)
-      };
-    })
-    .catch(err => {
-      return {
-        error: err
-      };
-    })
-    .then(data => {
-      return imageRef.set(data);
+      });
     });
 }

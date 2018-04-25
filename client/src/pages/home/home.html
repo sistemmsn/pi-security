@@ -16,6 +16,10 @@
         <ion-label>{{surveillanceState}} Surveillance</ion-label>
         <ion-toggle (ionChange)="toggleSurveillance($event)" checked="isSurveilling"></ion-toggle>
       </ion-item>
+      <ion-item>
+        <ion-label>{{hoursState}} Dark Hours</ion-label>
+        <ion-toggle (ionChange)="toggleHours($event)" checked="isDarkHours"></ion-toggle>
+      </ion-item>
     </ion-list>
   </ion-card>
   <ion-card class="last-data-section">

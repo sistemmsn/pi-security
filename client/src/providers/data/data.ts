@@ -24,8 +24,9 @@ export class DataProvider {
   }
 
   getAllImages(location: string) {
-    return this.ref.child(`imageLogs/${location}`)
-      .orderByKey();
+    return this.db.object(`imageLogs/${location}`).valueChanges();
+    // return this.ref.child(`imageLogs/${location}`)
+    //   .orderByChild('timestamp');
   }
 
 }

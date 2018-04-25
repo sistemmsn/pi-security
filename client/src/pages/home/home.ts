@@ -11,16 +11,26 @@ import { LOCATION } from '../../shared/constants';
 export class HomePage {
   isSurveilling: boolean;
   surveillanceState: string;
+  isDarkHours: boolean;
+  hoursState: string;
   lastImage: string;
   lastTime: Date;
   lastImageData: any;
 
   constructor(public navCtrl: NavController, private actionProvider: ActionProvider,
     private toast: ToastController, private dataProvider: DataProvider) {
+  }
+
+  ionViewDidLoad() {
     this.actionProvider.getLogSetting(LOCATION)
       .on('value', snap => {
         this.isSurveilling = snap.val();
         this.surveillanceState = snap.val() ? "Disable" : "Enable";
+      });
+    this.actionProvider.getDarkHoursSetting(LOCATION)
+      .on('value', snap => {
+        this.isDarkHours = snap.val();
+        this.hoursState = snap.val() ? "Disable" : "Enable";
       });
     this.dataProvider.lastImage(LOCATION)
       .on('child_added', snap => {
@@ -41,13 +51,20 @@ export class HomePage {
   }
 
   toggleSurveillance(event) {
-    console.log(event);
     this.actionProvider.setLogSetting(LOCATION, event.value)
       .then(() => {
         let message = event.value ? "Disabled" : "Enabled";
         message += "  surveillance on PI";
         this.toastMessage(message);
+      });
+  }
 
+  toggleHours(event) {
+    this.actionProvider.setDarkHoursSetting(LOCATION, event.value)
+      .then(() => {
+        let message = event.value ? "Disabled" : "Enabled";
+        message += "  Dark Hours (lighing)";
+        this.toastMessage(message);
       });
   }
 
