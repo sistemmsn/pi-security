@@ -92,5 +92,5 @@ const delayDetection = () => {
       hasMotion = false;
       console.log("Reset motion");
     }
-  }, 60000);
+  }, 15000);
 };
