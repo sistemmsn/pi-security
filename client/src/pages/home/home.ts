@@ -56,7 +56,7 @@ export class HomePage {
     if (this.isSurveilling == event.value) return;
     this.actionProvider.setLogSetting(LOCATION, event.value)
       .then(() => {
-        let message = event.value ? "Disabled" : "Enabled";
+        let message = event.value ? "Enabled" : "Disabled";
         message += "  surveillance on PI";
         this.toastMessage(message);
       });
@@ -66,8 +66,8 @@ export class HomePage {
     if (this.isDarkHours == event.value) return;
     this.actionProvider.setDarkHoursSetting(LOCATION, event.value)
       .then(() => {
-        let message = event.value ? "Disabled" : "Enabled";
-        message += "  Dark Hours (lighing)";
+        let message = event.value ? "Enabled" : "Disabled";
+        message += "  dark hours (lighting)";
         this.toastMessage(message);
       });
   }

@@ -1,6 +1,6 @@
 var MagicHomeControl = require('magic-home').Control;
 const Promise = require("promise");
-const config = require('./src/config');
+const config = require('./config');
 
 const firebaseAdmin = config.admin;
 const db = firebaseAdmin.database();
@@ -26,7 +26,7 @@ module.exports = {
                 resolve("Dark Hours");
             } else {
                 return light.turnOn((err, success) => {
-                    if (err) reject(err);
+                    if (err) resolve(err);
                     resolve(success);
                 });
             }
@@ -35,7 +35,7 @@ module.exports = {
     turnOff: () => {
         return new Promise((resolve, reject) => {
             return light.turnOff((err, success) => {
-                if (err) reject(err);
+                if (err) resolve(err);
                 resolve(success);
             });
         });
@@ -43,7 +43,7 @@ module.exports = {
     setColor: (red, green, blue) => {
         return new Promise((resolve, reject) => {
             return light.setColorWithBrightness(red, green, blue, 100, (err, success) => {
-                if (err) reject(err);
+                if (err) resolve(err);
                 resolve(success);
             });
         });
