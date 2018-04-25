@@ -70,8 +70,8 @@ function remoteCaptureImage() {
  * Delay for next motion detection, log the image and file timestamp
  */
 var saveImage = (isRemote) => {
-  roomLight.turnOn(isRemote)
-    .then(() => {
+  // roomLight.turnOn(isRemote)
+  //   .then(() => {
       piCamera.captureImage().then(data => {
         roomLight.turnOff();
         delayDetection();
@@ -82,7 +82,7 @@ var saveImage = (isRemote) => {
       }).catch(err => {
         console.log(err);
       })
-    })
+    // })
 }
 
 // Delay for a minute till motion can be "detected"
