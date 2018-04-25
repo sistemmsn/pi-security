@@ -1,7 +1,6 @@
 import { PipesModule } from './../pipes/pipes.module';
 import { NgModule, ErrorHandler } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
-import { HttpModule } from '@angular/http';
 import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 import { MyApp } from './app.component';
@@ -17,6 +16,7 @@ import { environment } from '../environments/environment';
 import { ActionProvider } from '../providers/action/action';
 import { DataProvider } from '../providers/data/data';
 import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
+import { ImagesPageModule } from '../pages/images/images.module';
 
 @NgModule({
   declarations: [
@@ -30,7 +30,8 @@ import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/dat
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireDatabaseModule,
-    PipesModule
+    PipesModule,
+    ImagesPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

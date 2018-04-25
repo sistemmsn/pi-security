@@ -18,9 +18,14 @@ export class DataProvider {
   }
 
   lastImageTags(location: string): Query {
-    return this.ref.child(`infoLogs/${location}`)
+    return this.ref.child(`dataLogs/${location}`)
       .orderByKey()
       .limitToLast(1);
+  }
+
+  getAllImages(location: string) {
+    return this.ref.child(`imageLogs/${location}`)
+      .orderByKey();
   }
 
 }

@@ -1,4 +1,4 @@
-# PI-Security!
+# PI-Security
 
 ## Introduction
 PI-Security is a full stack security solution that utilizes a Raspberry Pi to monitor a space by using both an IR motion sensor and a Raspicam. You are required to use Firebase as the database and serverless backend, Ionic for the frontend and AngularFire to bootstrap the entire project. 
